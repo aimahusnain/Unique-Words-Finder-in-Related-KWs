@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./Providers";
+import NextThemeProvider from '../provides/theme-provider'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,9 +31,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} items-center justify-center bg-black`}
+        className={`${inter.className}`}
       >
-        {children}
+       <NextThemeProvider>
+          <Providers>
+                {children}
+          </Providers>
+        </NextThemeProvider>
       </body>
     </html>
   );
