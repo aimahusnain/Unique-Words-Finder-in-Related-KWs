@@ -33,11 +33,9 @@ export default function RootLayout({
       <body
         className={`${inter.className}`}
       >
-       <NextThemeProvider>
           <Providers>
                 {children}
           </Providers>
-        </NextThemeProvider>
       </body>
     </html>
   );

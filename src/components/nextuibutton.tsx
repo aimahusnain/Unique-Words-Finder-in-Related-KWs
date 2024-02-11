@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import React from "react";
 
-const NextuiButton = ({
+const NextuiButton: any = ({
   children,
   className,
   onPress,
