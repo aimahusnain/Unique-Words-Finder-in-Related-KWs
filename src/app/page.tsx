@@ -5,7 +5,6 @@ import React, { useState } from "react";
 export default function KeywordMatcher() {
   const [mainKeyword, setMainKeyword] = useState("");
   const [relatedKeywords, setRelatedKeywords] = useState("");
-  const [matchedKeywords, setMatchedKeywords] = useState([]);
   const [nonMatchedKeywords, setNonMatchedKeywords] = useState([]);
 
   const processKeywords = () => {
@@ -13,7 +12,7 @@ export default function KeywordMatcher() {
     const relatedKeywordsArr = relatedKeywords
       .toLowerCase()
       .split("\n")
-      .flatMap((keyword) => keyword.split(" ")) // Split lines into individual words
+      .flatMap((keyword) => keyword.split(" "))
       .filter(Boolean);
 
     // const matched = relatedKeywordsArr.filter((word) =>
@@ -57,8 +56,9 @@ export default function KeywordMatcher() {
       <div className="mb-4">
         <label className="block text-white mb-2">Related Keywords:</label>
         <textarea
-          className="w-full bg-indigo-700 resize-none rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          className="w-full bg-indigo-700 rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           value={relatedKeywords}
+
           onChange={(e) => setRelatedKeywords(e.target.value)}
         />
       </div>
