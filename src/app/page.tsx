@@ -1,13 +1,16 @@
 "use client";
 
 import NextuiButton from "@/src/components/nextuibutton";
-import { Input } from "@nextui-org/react";
+import { Input, Textarea } from "@nextui-org/react";
+import { Copy } from "lucide-react";
 import { useState } from "react";
+import { Check } from "lucide-react";
 
 export default function KeywordMatcher() {
   const [mainKeyword, setMainKeyword] = useState("");
   const [relatedKeywords, setRelatedKeywords] = useState("");
   const [nonMatchedKeywords, setNonMatchedKeywords] = useState([]);
+  const [isCopied, setIsCopied] = useState(false);
 
   const processKeywords = () => {
     const mainKeywordLowerCase = mainKeyword.toLowerCase();
@@ -17,14 +20,10 @@ export default function KeywordMatcher() {
       .flatMap((keyword) => keyword.split(" "))
       .filter(Boolean);
 
-    // const matched = relatedKeywordsArr.filter((word) =>
-    //   mainKeywordLowerCase.includes(word)
-    // );
     const nonMatched = relatedKeywordsArr.filter(
       (word) => !mainKeywordLowerCase.includes(word)
     );
 
-    // Group non-matched keywords into lines based on their position in the original input
     const nonMatchedLines: any = relatedKeywords
       .split("\n")
       .map((line) =>
@@ -35,75 +34,80 @@ export default function KeywordMatcher() {
       )
       .filter(Boolean);
 
-    // Remove duplicate words from matched array
-    // const uniqueMatched: any = [...new Set(matched)];
     const uniqueNonMatched = [...new Set(nonMatched)];
 
-    // setMatchedKeywords(uniqueMatched);
     setNonMatchedKeywords(nonMatchedLines);
   };
 
+  const copyToClipboard = () => {
+    navigator.clipboard
+      .writeText(nonMatchedKeywords.join("\n"))
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000); // Revert to copy icon after 2 seconds
+      })
+      .catch((err) => {
+        console.error("Failed to copy:", err);
+      });
+  };
+
   return (
-    <div className="bg-indigo-900 text-white p-6 rounded-lg max-w-lg m-auto">
-      <h1 className="text-2xl font-bold mb-4 text-white">
-        Unique Words Finder in Related KWs
-      </h1>
-      <div className="mb-4">
-        <label className="block text-white mb-2">Main Keyword:</label>
-        <Input
-          type="Main Keyword"
-          value={mainKeyword}
-          onChange={(e) => setMainKeyword(e.target.value)}
-          label="Main Keyword:"
-        />
-        {/* <input
-          className="w-full bg-indigo-700 rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-          type="text"
-          value={mainKeyword}
-          onChange={(e) => setMainKeyword(e.target.value)}
-        /> */}
-      </div>
-      <div className="mb-4">
-        <label className="block text-white mb-2">Related Keywords:</label>
-        <textarea
-          className="w-full bg-indigo-700 rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-          value={relatedKeywords}
-          rows={10}
-          onChange={(e) => setRelatedKeywords(e.target.value)}
-        />
-      </div>
-      <NextuiButton
-        size="lg"
-        className="bg-white hover:bg-indigo-600 text-black hover:text-white"
-        onPress={processKeywords}
-      >
-        Find Different
-      </NextuiButton>
-      {/* <button
-        className="bg-white transition-all hover:bg-indigo-600 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700"
-        onClick={processKeywords}
-      >
-        Match Keywords
-      </button> */}
-      {/* <div className="mt-6">
-        <h2 className="text-xl text-white mb-1">Matched Keywords:</h2>
-        <ul className="list-disc ml-7">
-          {matchedKeywords.map((word, index) => (
-            <li key={index} className="mb-2 text-indigo-300">
-              {word}
-            </li>
-          ))}
-        </ul>
-      </div> */}
-      <div className="mt-6">
-        <h2 className="text-xl text-white mb-1">Non-Matched Keywords:</h2>
-        <ul className="list-disc ml-7">
-          {nonMatchedKeywords.map((word, index) => (
-            <li key={index} className="mb-2 text-indigo-300">
-              {word}
-            </li>
-          ))}
-        </ul>
+    <div className="bg-black min-h-screen flex justify-center items-center">
+      <div className="bg-zinc-900 p-8 rounded-lg shadow-md w-full max-w-3xl">
+        <h1 className="text-3xl font-bold mb-6 text-center text-white">
+          Unique Words Finder in Related Keywords
+        </h1>
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex-1">
+            <Input
+              type="text"
+              value={mainKeyword}
+              onChange={(e) => setMainKeyword(e.target.value)}
+              label="Main Keyword:"
+              classNames={{ input: "text-gray-800" }}
+              className="mb-4"
+            />
+            <Textarea
+              label="Related Keywords"
+              disableAnimation
+              classNames={{ input: "resize-y min-h-[70px] text-gray-800" }}
+              value={relatedKeywords}
+              onChange={(e) => setRelatedKeywords(e.target.value)}
+              className="mb-4"
+            />
+            <NextuiButton
+              size="lg"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 w-full mb-4"
+              onPress={processKeywords}
+            >
+              Find Different
+            </NextuiButton>
+          </div>
+
+          <div className="flex gap-3">
+            <div>
+              <h2 className="text-2xl mb-2 text-white">
+                Non-Matched Keywords:
+              </h2>
+              <ul className="list-disc pl-6 text-white">
+                {nonMatchedKeywords.map((word, index) => (
+                  <li key={index} className="mb-2">
+                    {word}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <NextuiButton isIconOnly={true} onPress={copyToClipboard}>
+              {isCopied ? (
+                <span className="text-green-600">
+                  <Check />
+                </span>
+              ) : (
+                <Copy className="text-white" />
+              )}
+            </NextuiButton>
+          </div>
+        </div>
       </div>
     </div>
   );
