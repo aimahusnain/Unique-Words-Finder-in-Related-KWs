@@ -16,7 +16,7 @@ export const metadata: Metadata = {
       "Discover unique words within related keywords effortlessly with our tool. Streamline your keyword research and enhance your content creation process.",
     url: "https://unique-words-finder-in-related-k-ws.vercel.app/",
     siteName: "Unique Words Finder in Related KWs",
-    images: "/socialbanner.png",
+    images: "/socialbanner",
     locale: "en_US",
     type: "website",
   },
