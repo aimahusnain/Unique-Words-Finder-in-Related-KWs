@@ -1,34 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from 'react';
 
-export default function Home() {
-  const [inputValue, setInputValue] = useState("");
-  const [wordArray, setWordArray] = useState<string[]>([]);
+export default function KeywordMatcher() {
+  const [mainKeyword, setMainKeyword] = useState("");
+  const [relatedKeywords, setRelatedKeywords] = useState("");
+  const [matchedKeywords, setMatchedKeywords] = useState([]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
+  const matchKeywords = () => {
+    const mainKeywordLowerCase = mainKeyword.toLowerCase();
+    const relatedKeywordsArr = relatedKeywords.toLowerCase().split("\n").filter(Boolean);
 
-  const handleSubmit = () => {
-    const words = inputValue.split(" ").map(word => word.replace(".", ""));
-    setWordArray(words);
-  };
+    const matched = relatedKeywordsArr.flatMap(keyword => {
+      const words = keyword.split(" ");
+      return words.filter(word => mainKeywordLowerCase.includes(word));
+    });
+
+    setMatchedKeywords(matched);
+  }
 
   return (
-    <main className="w-full max-h-full flex items-center justify-center">
+    <div className='text-white'>
+      <h1>Keyword Matcher</h1>
       <div>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
-        <button onClick={handleSubmit} className="bg-emerald-500 p-3">Submit</button>
-        <div className="text-white">
-          <h2>Words:</h2>
-          <ul>
-            {wordArray.map((word, index) => (
-              <li key={index}>{word}</li>
-            ))}
-          </ul>
-        </div>
+        <label>Main Keyword:</label>
+        <input className='text-black' type="text" value={mainKeyword} onChange={(e) => setMainKeyword(e.target.value)} />
       </div>
-    </main>
+      <div>
+        <label>Related Keywords:</label>
+        <textarea className='text-black' value={relatedKeywords} onChange={(e) => setRelatedKeywords(e.target.value)} />
+      </div>
+      <button onClick={matchKeywords}>Match Keywords</button>
+      <div>
+        <h2>Matched Keywords:</h2>
+        <ul>
+          {matchedKeywords.map((word, index) => (
+            <li key={index}>{word}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
