@@ -8,31 +8,34 @@ export default function KeywordMatcher() {
   const [matchedKeywords, setMatchedKeywords] = useState([]);
   const [nonMatchedKeywords, setNonMatchedKeywords] = useState([]);
 
-  const processKeywords = () => {
-    const mainKeywordLowerCase = mainKeyword.toLowerCase();
-    const relatedKeywordsArr = relatedKeywords
-      .toLowerCase()
-      .split("\n")
-      .flatMap((keyword) => keyword.split(" ")) // Split lines into individual words
-      .filter(Boolean);
+const processKeywords = () => {
+  const mainKeywordLowerCase = mainKeyword.toLowerCase();
+  const relatedKeywordsArr = relatedKeywords
+    .toLowerCase()
+    .split("\n")
+    .flatMap(keyword => keyword.split(" ")) // Split lines into individual words
+    .filter(Boolean);
 
-    const matched = relatedKeywordsArr.filter((word) =>
-      mainKeywordLowerCase.includes(word)
-    );
-    const nonMatched = relatedKeywordsArr.filter(
-      (word) => !mainKeywordLowerCase.includes(word)
-    );
+  const matched = relatedKeywordsArr.filter(word => mainKeywordLowerCase.includes(word));
+  const nonMatched = relatedKeywordsArr.filter(word => !mainKeywordLowerCase.includes(word));
 
-    // Remove duplicate words from matched and non-matched arrays
-    const uniqueMatched: any = [...new Set(matched)];
-    const uniqueNonMatched: any = [...new Set(nonMatched)];
+  // Group non-matched keywords into lines based on their position in the original input
+  const nonMatchedLines = relatedKeywords
+    .split("\n")
+    .map(line => line.split(" ").filter(word => nonMatched.includes(word)).join(" "))
+    .filter(Boolean);
 
-    setMatchedKeywords(uniqueMatched);
-    setNonMatchedKeywords(uniqueNonMatched);
-  };
+  // Remove duplicate words from matched array
+  const uniqueMatched = [...new Set(matched)];
+  const uniqueNonMatched = [...new Set(nonMatched)];
+
+  setMatchedKeywords(uniqueMatched);
+  setNonMatchedKeywords(nonMatchedLines);
+};
+
 
   return (
-    <div className="bg-indigo-900 text-white p-6 rounded-lg max-w-md mx-auto">
+    <div className="bg-indigo-900 text-white p-6 rounded-lg max-w-md m-auto">
       <h1 className="text-2xl font-bold mb-4 text-white">Keyword Matcher</h1>
       <div className="mb-4">
         <label className="block text-white mb-2">Main Keyword:</label>
@@ -46,7 +49,7 @@ export default function KeywordMatcher() {
       <div className="mb-4">
         <label className="block text-white mb-2">Related Keywords:</label>
         <textarea
-          className="w-full bg-indigo-700 rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          className="w-full bg-indigo-700 resize-none rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           value={relatedKeywords}
           onChange={(e) => setRelatedKeywords(e.target.value)}
         />
