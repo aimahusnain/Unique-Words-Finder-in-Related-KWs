@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: {
     template: `%s | Unique Words Finder in Related KWs`,
     default: "Unique Words Finder in Related KWs",
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
       "Discover unique words within related keywords effortlessly with our tool. Streamline your keyword research and enhance your content creation process.",
     url: "https://unique-words-finder-in-related-k-ws.vercel.app/",
     siteName: "Unique Words Finder in Related KWs",
-    images: "/socialbanner",
+    images: ["/socialbanner.png"],
     locale: "en_US",
     type: "website",
   },
