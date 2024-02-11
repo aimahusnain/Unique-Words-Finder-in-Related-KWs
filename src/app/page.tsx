@@ -8,31 +8,39 @@ export default function KeywordMatcher() {
   const [matchedKeywords, setMatchedKeywords] = useState([]);
   const [nonMatchedKeywords, setNonMatchedKeywords] = useState([]);
 
-const processKeywords = () => {
-  const mainKeywordLowerCase = mainKeyword.toLowerCase();
-  const relatedKeywordsArr = relatedKeywords
-    .toLowerCase()
-    .split("\n")
-    .flatMap(keyword => keyword.split(" ")) // Split lines into individual words
-    .filter(Boolean);
+  const processKeywords = () => {
+    const mainKeywordLowerCase = mainKeyword.toLowerCase();
+    const relatedKeywordsArr = relatedKeywords
+      .toLowerCase()
+      .split("\n")
+      .flatMap((keyword) => keyword.split(" ")) // Split lines into individual words
+      .filter(Boolean);
 
-  const matched = relatedKeywordsArr.filter(word => mainKeywordLowerCase.includes(word));
-  const nonMatched = relatedKeywordsArr.filter(word => !mainKeywordLowerCase.includes(word));
+    // const matched = relatedKeywordsArr.filter((word) =>
+    //   mainKeywordLowerCase.includes(word)
+    // );
+    const nonMatched = relatedKeywordsArr.filter(
+      (word) => !mainKeywordLowerCase.includes(word)
+    );
 
-  // Group non-matched keywords into lines based on their position in the original input
-  const nonMatchedLines: any = relatedKeywords
-    .split("\n")
-    .map(line => line.split(" ").filter(word => nonMatched.includes(word)).join(" "))
-    .filter(Boolean);
+    // Group non-matched keywords into lines based on their position in the original input
+    const nonMatchedLines: any = relatedKeywords
+      .split("\n")
+      .map((line) =>
+        line
+          .split(" ")
+          .filter((word) => nonMatched.includes(word))
+          .join(" ")
+      )
+      .filter(Boolean);
 
-  // Remove duplicate words from matched array
-  const uniqueMatched: any = [...new Set(matched)];
-  const uniqueNonMatched = [...new Set(nonMatched)];
+    // Remove duplicate words from matched array
+    // const uniqueMatched: any = [...new Set(matched)];
+    const uniqueNonMatched = [...new Set(nonMatched)];
 
-  setMatchedKeywords(uniqueMatched);
-  setNonMatchedKeywords(nonMatchedLines);
-};
-
+    // setMatchedKeywords(uniqueMatched);
+    setNonMatchedKeywords(nonMatchedLines);
+  };
 
   return (
     <div className="bg-indigo-900 text-white p-6 rounded-lg max-w-md m-auto">
@@ -60,7 +68,7 @@ const processKeywords = () => {
       >
         Match Keywords
       </button>
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <h2 className="text-xl text-white mb-1">Matched Keywords:</h2>
         <ul className="list-disc ml-7">
           {matchedKeywords.map((word, index) => (
@@ -69,7 +77,7 @@ const processKeywords = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
       <div className="mt-6">
         <h2 className="text-xl text-white mb-1">Non-Matched Keywords:</h2>
         <ul className="list-disc ml-7">
