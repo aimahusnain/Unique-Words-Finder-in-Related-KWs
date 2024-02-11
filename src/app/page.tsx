@@ -58,7 +58,7 @@ export default function KeywordMatcher() {
         <textarea
           className="w-full bg-indigo-700 rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           value={relatedKeywords}
-
+      rows={10}
           onChange={(e) => setRelatedKeywords(e.target.value)}
         />
       </div>
