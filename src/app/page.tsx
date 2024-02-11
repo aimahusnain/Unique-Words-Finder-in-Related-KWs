@@ -24,8 +24,8 @@ export default function KeywordMatcher() {
     );
 
     // Remove duplicate words from matched and non-matched arrays
-    const uniqueMatched = [...new Set(matched)];
-    const uniqueNonMatched = [...new Set(nonMatched)];
+    const uniqueMatched: any = [...new Set(matched)];
+    const uniqueNonMatched: any = [...new Set(nonMatched)];
 
     setMatchedKeywords(uniqueMatched);
     setNonMatchedKeywords(uniqueNonMatched);
