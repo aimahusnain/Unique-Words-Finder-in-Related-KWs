@@ -87,7 +87,7 @@ export default function KeywordMatcher() {
           <div className="flex gap-3">
             <div>
               <h2 className="text-2xl mb-2 text-white">
-                Non-Matched Keywords:
+                Unique Keywords:
               </h2>
               <ul className="list-disc pl-6 text-white">
                 {nonMatchedKeywords.map((word, index) => (
