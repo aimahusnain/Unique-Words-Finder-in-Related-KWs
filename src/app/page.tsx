@@ -7,17 +7,20 @@ export default function KeywordMatcher() {
   const [relatedKeywords, setRelatedKeywords] = useState("");
   const [matchedKeywords, setMatchedKeywords] = useState([]);
 
-  const matchKeywords = () => {
-    const mainKeywordLowerCase = mainKeyword.toLowerCase();
-    const relatedKeywordsArr = relatedKeywords.toLowerCase().split("\n").filter(Boolean);
+const matchKeywords = () => {
+  const mainKeywordLowerCase = mainKeyword.toLowerCase();
+  const relatedKeywordsArr = relatedKeywords.toLowerCase().split("\n").filter(Boolean);
 
-    const matched = relatedKeywordsArr.flatMap(keyword => {
-      const words = keyword.split(" ");
-      return words.filter(word => mainKeywordLowerCase.includes(word));
-    });
+  const matched: any = relatedKeywordsArr.flatMap(keyword => {
+    const words = keyword.split(" ");
+    return words.filter(word => mainKeywordLowerCase.includes(word));
+  }) as string[];
 
-    setMatchedKeywords(matched);
-  }
+  setMatchedKeywords(matched);
+}
+
+
+
 
   return (
     <div className='text-white'>
