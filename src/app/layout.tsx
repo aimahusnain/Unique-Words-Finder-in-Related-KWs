@@ -11,11 +11,12 @@ export const metadata: Metadata = {
   },
   description: "Unique Words Finder in Related KWs",
   openGraph: {
-    title: '"Unique Words Finder in Related KWs"',
-    description: '"Unique Words Finder in Related KWs"',
+    title: "Unique Words Finder in Related KWs",
+    description:
+      "Discover unique words within related keywords effortlessly with our tool. Streamline your keyword research and enhance your content creation process.",
     url: "https://unique-words-finder-in-related-k-ws.vercel.app/",
-    siteName: '"Unique Words Finder in Related KWs"',
-    images: '/socialbanner.png',
+    siteName: "Unique Words Finder in Related KWs",
+    images: "/socialbanner.png",
     locale: "en_US",
     type: "website",
   },
@@ -28,7 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} items-center justify-center bg-black`}>{children}</body>
+      <body
+        className={`${inter.className} items-center justify-center bg-black`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
