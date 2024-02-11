@@ -20,13 +20,13 @@ const processKeywords = () => {
   const nonMatched = relatedKeywordsArr.filter(word => !mainKeywordLowerCase.includes(word));
 
   // Group non-matched keywords into lines based on their position in the original input
-  const nonMatchedLines = relatedKeywords
+  const nonMatchedLines: any = relatedKeywords
     .split("\n")
     .map(line => line.split(" ").filter(word => nonMatched.includes(word)).join(" "))
     .filter(Boolean);
 
   // Remove duplicate words from matched array
-  const uniqueMatched = [...new Set(matched)];
+  const uniqueMatched: any = [...new Set(matched)];
   const uniqueNonMatched = [...new Set(nonMatched)];
 
   setMatchedKeywords(uniqueMatched);
