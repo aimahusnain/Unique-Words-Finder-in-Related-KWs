@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
 import NextuiButton from "@/src/components/nextuibutton";
 import { Input } from "@nextui-org/react";
-import NextUiInput from "../components/nextuiInput";
+import { useState } from "react";
 
 export default function KeywordMatcher() {
   const [mainKeyword, setMainKeyword] = useState("");
@@ -38,7 +37,7 @@ export default function KeywordMatcher() {
 
     // Remove duplicate words from matched array
     // const uniqueMatched: any = [...new Set(matched)];
-    // const uniqueNonMatched = [...new Set(nonMatched)];
+    const uniqueNonMatched = [...new Set(nonMatched)];
 
     // setMatchedKeywords(uniqueMatched);
     setNonMatchedKeywords(nonMatchedLines);
@@ -51,13 +50,18 @@ export default function KeywordMatcher() {
       </h1>
       <div className="mb-4">
         <label className="block text-white mb-2">Main Keyword:</label>
-        <NextUiInput />
-        <input
+        <Input
+          type="Main Keyword"
+          value={mainKeyword}
+          onChange={(e) => setMainKeyword(e.target.value)}
+          label="Main Keyword:"
+        />
+        {/* <input
           className="w-full bg-indigo-700 rounded border border-indigo-600 py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           type="text"
           value={mainKeyword}
           onChange={(e) => setMainKeyword(e.target.value)}
-        />
+        /> */}
       </div>
       <div className="mb-4">
         <label className="block text-white mb-2">Related Keywords:</label>
